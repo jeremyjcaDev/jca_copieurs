@@ -1,10 +1,12 @@
 import axios from "axios";
+import { mockCopieurData } from "../mockData";
 
 // Service API pour le module PrestaShop JCA Copieurs
 class ApiService {
   constructor() {
     this.baseURL = window.JCA_COPIEURS_CONFIG?.apiBaseUrl;
     this.token = window.JCA_COPIEURS_CONFIG?.token || "";
+    this.useMockData = process.env.NODE_ENV === 'development' && !this.baseURL;
 
     // Configuration Axios
     this.axios = axios.create({
@@ -89,6 +91,16 @@ class ApiService {
    * Récupération d'un copieur spécifique par ID
    */
   async getCopieur(id) {
+    if (this.useMockData) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+            success: true,
+            data: mockCopieurData
+          });
+        }, 500);
+      });
+    }
     return this.request("getCopieur", { id });
   }
 

@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "dev": "cd vue_dev_front && npm run serve",
+    "build": "cd vue_dev_front && npm run build"
+  },
   "dependencies": {
     "express": "^5.2.1"
   }
